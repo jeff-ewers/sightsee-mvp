@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react"
-import { getUserTrips } from "../../services/tripService"
+import { getTripsWithPlaces } from "../../services/tripService"
 import { Link, useNavigate } from "react-router-dom"
 import './TripsList.css'
 
 export const TripsList = ({currentUser}) => {
 const [trips, setTrips] = useState([])
 useEffect(() => {
-    getUserTrips(currentUser.id).then(userTrips => {setTrips(userTrips)})
+    getTripsWithPlaces(currentUser.id).then(userTrips => {setTrips(userTrips)})
 }, [currentUser.id])
-
 
 return (
 

@@ -16,35 +16,35 @@
         {
             "id": 1,
             "name": "Eiffel Tower",
-            "desc": "A wrought-iron lattice tower on the Champ de Mars in Paris, France.",
+            "desc": "A wrought-iron lattice tower on the Champ de Mars.",
             "categoryId": 1,
             "userId": 1
         },
         {
             "id": 2,
             "name": "Louvre Museum",
-            "desc": "One of the world's largest museums and a historic monument in Paris, France.",
+            "desc": "One of the world's largest museums and a historic monument.",
             "categoryId": 2,
             "userId": 2
         },
         {
             "id": 3,
             "name": "Parc de la Villette",
-            "desc": "A public park in the 19th arrondissement of Paris, France.",
+            "desc": "A public park in the 19th arrondissement.",
             "categoryId": 3,
             "userId": 1
         },
         {
             "id": 4,
             "name": "Le Marais",
-            "desc": "A neighborhood in the 3rd and 4th arrondissements of Paris, France.",
+            "desc": "A neighborhood in the 3rd and 4th arrondissements.",
             "categoryId": 4,
             "userId": 1
         },
         {
             "id": 5,
             "name": "Notre-Dame Cathedral",
-            "desc": "A historic Roman Catholic cathedral on an island in the Seine river in Paris, France.",
+            "desc": "A historic Roman Catholic cathedral on an island in the Seine.",
             "categoryId": 1,
             "userId": 1
         },

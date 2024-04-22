@@ -1,0 +1,31 @@
+.trip-edit__container {
+    background-color: var(--primary);
+
+}
+
+
+  .trip-edit__poi-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 1rem 2rem 0rem 2rem;
+  }
+
+
+
+  .place > h2 {
+    color: var(--primary);
+  }
+
+  .place > h3 {
+    color: var(--primary);
+  }
+
+  .place {
+    background-color: var(--offWhite);
+    border: 2px solid var(--primary);
+    margin: 0.5rem 0;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+  }
