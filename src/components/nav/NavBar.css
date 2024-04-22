@@ -31,5 +31,5 @@
 
   .navbar-item:hover {
     transition: 0.3s;
-    border-bottom: 3px solid var(--primary);
+    border-bottom: 4px solid var(--primary);
   }
