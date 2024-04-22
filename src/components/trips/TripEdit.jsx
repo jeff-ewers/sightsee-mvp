@@ -1,7 +1,11 @@
+import { useParams } from "react-router-dom"
+import { Map } from "../map/Map"
+
 export const TripEdit = ({currentUser}) => {
+    const { tripId } = useParams()
     return (
-        <div className="trips_container">
-            <h2>here are trip edits</h2>
+        <div>
+            <h2>edit me</h2>
         </div>
     )
 }

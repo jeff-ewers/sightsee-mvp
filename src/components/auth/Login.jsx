@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import "./Login.css"
-import { getUserByEmail } from "../../services/UserService"
+import { getUserByEmail } from "../../services/userService.js"
 
 export const Login = () => {
   const [email, set] = useState("jeff@sightsee.ing")
