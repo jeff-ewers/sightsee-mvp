@@ -9,6 +9,8 @@ useEffect(() => {
     getTripsWithPlaces(currentUser.id).then(userTrips => {setTrips(userTrips)})
 }, [currentUser.id])
 
+document.body.style = 'background: #004F32;';
+
 return (
 
         <article className="trips-list">

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getAllCategories } from '../../services/categoryService'; 
 import { savePOI } from  '../../services/placeService'
-export const POIForm = ({ currentUser, existingPOI }) => {
+export const POIForm = ({ currentUser, existingPOI, addPlaceToTransientTrip }) => {
  const [categories, setCategories] = useState([]);
  const [editedPOI, setEditedPOI] = useState({
     name: existingPOI ? existingPOI.name : "",
@@ -11,22 +11,33 @@ export const POIForm = ({ currentUser, existingPOI }) => {
  });
 
  useEffect(() => {
+    setEditedPOI(prevState => ({ ...prevState, userId: currentUser.id }));
+ }, [currentUser]);
+
+ useEffect(() => {
     getAllCategories().then((categoriesArray) => {
       setCategories(categoriesArray);
     });
  }, []);
 
  const handleSave = () => {
-    const poiToSave = {
-      ...editedPOI,
-      id: existingPOI ? existingPOI.id : null, // If editing, keep the existing ID; otherwise, it's a new POI
-    };
-    savePOI(poiToSave).then(() => {
+    if (editedPOI.categoryId !== 0) {
+        const poiToSave = {
+            ...editedPOI,
+            id: existingPOI ? existingPOI.id : null, // If editing, keep the existing ID; otherwise, it's a new POI
+          };
+          addPlaceToTransientTrip(poiToSave)
+    }
+    else {
+        window.alert(`Please select a category.`)
+    }
+    //.then(() => {
       // Handle successful save, e.g., navigate back or show a success message
-    }).catch((error) => {
+    //}).catch((error) => {
       // Handle error, e.g., show an error message
-    });
- };
+    }
+    //);
+ //};
 
  return (
     <form className="trip-edit__poi-form">
@@ -68,7 +79,7 @@ export const POIForm = ({ currentUser, existingPOI }) => {
               setEditedPOI(copy);
             }}
           >
-            <option value="" disabled>Select a category</option>
+            <option value="0" disabled>Select a category</option>
             {categories.map((category) => (
               <option value={category.id} key={category.id}>
                 {category.category}
@@ -77,7 +88,7 @@ export const POIForm = ({ currentUser, existingPOI }) => {
           </select>
         </div>
       </fieldset>
-      <button type="button" onClick={handleSave}>Save</button>
+      <button className="btn-primary" type="button" onClick={handleSave}>Save</button>
     </form>
  );
 };
