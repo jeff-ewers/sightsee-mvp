@@ -3,10 +3,11 @@ import { getTripActivities } from "./activitiesService";
 
 export const saveTripAndPlaces = async (transientTrip, transientPlaces) => {
     const tripActivities = await getTripActivities(transientTrip?.id);
-    // Save the trip
+    //define options based upon new vs existing trip
     const isNew = (transientTrip.id === null);
     const endpoint = isNew ?  'http://localhost:8088/trips' : `http://localhost:8088/trips/${transientTrip.id}`;
     const method = isNew ? 'POST' : 'PUT';
+    //test whether activity exists in the database
     const isNewActivity = (savedPlace, savedTrip) => {
         for (const activity of tripActivities) {
             if ( activity.placeId === savedPlace.id && activity.tripId === savedTrip.id ) {
@@ -24,10 +25,10 @@ export const saveTripAndPlaces = async (transientTrip, transientPlaces) => {
     }) 
     .then(response => response.json())
     .then(savedTrip => {
-        // Save new places and create activities
+        //save new places and create activities
         const promises = transientPlaces.map(place => {
             if (!place.id) {
-                // Place is new, save it
+                //if place has no id, it is new, so save it
                 return fetch('http://localhost:8088/places', {
                     method: 'POST',
                     headers: {
@@ -38,9 +39,9 @@ export const saveTripAndPlaces = async (transientTrip, transientPlaces) => {
                 .then(response => response.json())
                 .then(savedPlace => {
                     
-                    //If the activity is new
+                    //if the activity entry is new
                     if (isNewActivity(savedPlace, savedTrip)) {
-                        // Create activity linking the trip and the place
+                        //create activity linking the trip and the place
                         return fetch('http://localhost:8088/activities', {
                             method: 'POST',
                             headers: {
@@ -58,7 +59,7 @@ export const saveTripAndPlaces = async (transientTrip, transientPlaces) => {
                 );
             } else {
                 
-                // Place already exists, just create activity
+                // if place already exists, then just create activity
                 if (isNewActivity(place, savedTrip)) {
                 return fetch('http://localhost:8088/activities', {
                     method: 'POST',
