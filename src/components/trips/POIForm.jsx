@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getAllCategories } from '../../services/categoryService'; 
-import { savePOI } from  '../../services/placeService'
+//import { savePOI } from  '../../services/placeService'
 export const POIForm = ({ currentUser, existingPOI, addPlaceToTransientTrip }) => {
  const [categories, setCategories] = useState([]);
  const [editedPOI, setEditedPOI] = useState({
