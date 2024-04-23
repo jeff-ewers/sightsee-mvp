@@ -10,13 +10,14 @@ flex-direction: row;
 flex-wrap: wrap;
 gap: 8px;
 margin: 1rem 2rem 0rem 4.7rem;
+min-height: 215.2px;
 }
 
 .trip-edit__title {
 color: var(--offWhite);
 font-weight: 700;
 margin: 2rem 0rem 0rem 4.8rem;
-font-size: ;
+
 }
 
 .place > h2 {
@@ -33,6 +34,9 @@ border: 2px solid var(--primary);
 margin: 0.5rem 0;
 border-radius: 0.5rem;
 padding: 0.5rem;
+height: 180px;
+min-width: 120px;
+position: relative;
 }
 
 .trip-edit__poi-form {
@@ -55,4 +59,15 @@ button {
 form {
     box-shadow: none;
     border: 1px solid var(--dark)
+}
+
+button > img {
+    width: 12px;
+    height: 12px;
+  }
+
+.btn-delete {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
 }
