@@ -6,7 +6,9 @@ export const getAllPlacesWithCategory = () => {
     return fetch(`http://localhost:8088/places?_expand=category`).then(res => res.json());
 }
 
-export const savePOI = (poi) => {
-    console.log(poi)
-    return true;
+export const deletePlaceFromTrip = (activityId) => {
+    const deleteOptions = {
+        method: "DELETE"
+    }
+    return fetch(`http://localhost:8088/activities/${activityId}`, deleteOptions)
 }
