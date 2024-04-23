@@ -4,7 +4,7 @@ import { NavBar } from "../components/nav/NavBar.jsx"
 import { Trips } from "../components/trips/Trips.jsx"
 import { TripEdit } from "../components/trips/TripEdit.jsx"
 import { Home } from "../components/home/Home.jsx"
-import { TripCreate } from "../components/trips/TripCreate.jsx"
+
 
 export const UserViews = ({currentUser}) => {
     return (
