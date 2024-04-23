@@ -1,6 +1,6 @@
 import { POIForm } from "./POIForm";
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { saveTripAndPlaces } from "../../services/saveService";
 import trashIcon from '../../assets/trash.png'
 import './TripEdit.css';
@@ -10,6 +10,7 @@ import { getTripActivities } from "../../services/activitiesService";
 export const TripEdit = ({currentUser}) => {
     document.body.style = 'background: #004F32;';
     const location = useLocation();
+    const navigate = useNavigate()
     var trip = location.state?.trip;
     const [transientTrip, setTransientTrip] = useState({
         name: trip ? trip.name : "",
@@ -30,8 +31,8 @@ export const TripEdit = ({currentUser}) => {
         if(transientTrip.name !== "" && transientTrip.desc !== "") {
             setIsSaveEnabled(true);
         }
-        console.log("saving")
         saveTripAndPlaces(transientTrip, transientPlaces);
+        navigate('/trips');
     };
 
     // function to handle input changes and enable/disable save button
