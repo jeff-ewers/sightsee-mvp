@@ -1,14 +1,20 @@
 import { POIForm } from "./POIForm";
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { saveTripAndPlaces } from "../../services/saveService";
+import trashIcon from '../../assets/trash.png'
 import './TripEdit.css';
+import { deletePlaceFromTrip } from "../../services/placeService";
+import { getTripActivities } from "../../services/activitiesService";
 
 export const TripEdit = ({currentUser}) => {
+    document.body.style = 'background: #004F32;';
     const location = useLocation();
     var trip = location.state?.trip;
     const [transientTrip, setTransientTrip] = useState({
         name: trip ? trip.name : "",
         desc: trip ? trip.desc : "",
+        id: trip ? trip.id : null,
         userId: currentUser.id,
     });
     const [transientPlaces, setTransientPlaces] = useState(trip ? trip.places : []);
@@ -21,8 +27,11 @@ export const TripEdit = ({currentUser}) => {
     // Function to handle form submission
     const handleSaveTrip = (event) => {
         event.preventDefault(); // Prevent default form submission
-        // TODO: add logic to save the trip
-        console.log("Trip saved:", transientTrip);
+        if(transientTrip.name !== "" && transientTrip.desc !== "") {
+            setIsSaveEnabled(true);
+        }
+        console.log("saving")
+        saveTripAndPlaces(transientTrip, transientPlaces);
     };
 
     // Function to handle input changes and enable/disable save button
@@ -37,7 +46,28 @@ export const TripEdit = ({currentUser}) => {
         setTransientPlaces(transientPlaces => [...transientPlaces, place]);
     };
 
-    document.body.style = 'background: #004F32;';
+    const removePlace = async (tripId, place) => {
+        if (transientTrip.id === null) {
+            //remove place from state if it's a new place on a new trip
+            setTransientPlaces(transientPlaces => transientPlaces.filter(p => p.name !== place.name));
+        }
+        else if (place.id === null) {
+            //remove place from state if it's a new place on an existing trip
+            setTransientPlaces(transientPlaces => transientPlaces.filter(p => p.name !== place.name));
+        }
+        else if (tripId !== null && place.id !== null) {
+            const activityId = await getActivityId(tripId, place.id)
+            deletePlaceFromTrip(activityId);
+            //remove place from state
+            setTransientPlaces(transientPlaces => transientPlaces.filter(p => p.id !== place.id));
+        }
+    }
+
+    const getActivityId = async (tripId, placeId) => {
+        const tripActivities = await getTripActivities(tripId);
+        const activity = tripActivities.find(activity => activity.placeId === placeId);
+        return activity.id;
+    }
 
     return (
         <div className="trip-edit__container">
@@ -48,10 +78,14 @@ export const TripEdit = ({currentUser}) => {
                     addPlaceToTransientTrip={addPlaceToTransientTrip}
             />
             <div className="trip-edit__poi-list">
-                {transientPlaces?.length ? transientPlaces.map(place => (
-                    <section key={place.id} className="place">
+                {transientPlaces?.length ? transientPlaces.map((place, index) => (
+                    //Generate unique key if place.id is undefined
+                    <section key={place.id ? place.id : `new-${Date.now()}-${index}`} className="place">
                         <h2>{place.name}</h2>
                         <h3>{place.desc}</h3>
+                        <button className='btn-delete' onClick={() => removePlace(trip?.id, place)}>
+                                <img src={trashIcon} alt='Delete'/>
+                            </button>
                     </section>
                 )) : null}
             </div>
