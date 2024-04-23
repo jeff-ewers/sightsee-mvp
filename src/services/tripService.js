@@ -32,3 +32,10 @@ export const  getTripsWithPlaces = (userId) => {
             return Promise.all(tripPromises);
         });
 }
+
+export const deleteTrip = (tripId) => {
+    const deleteOptions = {
+        method: "DELETE"
+    }
+    return fetch(`http://localhost:8088/trips/${tripId}`, deleteOptions).then(res => res.json());
+}
