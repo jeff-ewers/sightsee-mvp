@@ -15,7 +15,7 @@ export const Trips = ({currentUser}) => {
     //   latitude: 36.1718,
     //   longitude: -86.785, 
     // ---
-    //Paris
+    //Paris V
       latitude: 48.858093, 
       longitude: 2.299694,
       width: "100vw",

@@ -13,10 +13,12 @@ useEffect(() => {
 document.body.style = 'background: #004F32;';
 
 const removeTrip = (event, tripId) => {
+    //prevent Link event on delete button
     event.preventDefault();
+    //prevent event from reaching Link
     event.stopPropagation();
     deleteTrip(tripId).then(() => {
-        //Update component state after deletion
+        //update component state after deletion
         setTrips(trips.filter(trip => trip.id !== tripId));
     });
     window.alert(`Trip deleted.`)
@@ -39,8 +41,8 @@ return (
                 trips?.length ? trips.map(trip => {
                     return (
                         <Link key={trip.id} to={`/trips/${trip.id}`}
+                        // pass trip as state for useLocation()
                         state={
-                            //todo: trip needs ancillary data, pois, etc.
                             {trip: trip}
                             }>
                         <section key={trip.id} className="trip">

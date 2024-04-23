@@ -18,15 +18,15 @@ export const TripEdit = ({currentUser}) => {
         userId: currentUser.id,
     });
     const [transientPlaces, setTransientPlaces] = useState(trip ? trip.places : []);
-    const [isSaveEnabled, setIsSaveEnabled] = useState(false); // State to manage save button enable/disable
+    const [isSaveEnabled, setIsSaveEnabled] = useState(false); // state to toggle save button
 
     useEffect(() => {
         setTransientTrip(prevState => ({ ...prevState, userId: currentUser.id }));
     }, [currentUser]);
 
-    // Function to handle form submission
+    // handle form submission
     const handleSaveTrip = (event) => {
-        event.preventDefault(); // Prevent default form submission
+        event.preventDefault(); // prevent default form submission and full page reload
         if(transientTrip.name !== "" && transientTrip.desc !== "") {
             setIsSaveEnabled(true);
         }
@@ -34,14 +34,15 @@ export const TripEdit = ({currentUser}) => {
         saveTripAndPlaces(transientTrip, transientPlaces);
     };
 
-    // Function to handle input changes and enable/disable save button
+    // function to handle input changes and enable/disable save button
     const handleInputChange = (event) => {
         const { name, value } = event.target;
+        //use computed property key in object literal to update state
         setTransientTrip(prevState => ({ ...prevState, [name]: value }));
-        setIsSaveEnabled(transientTrip.name && transientTrip.desc); // Enable save button if both name and desc are filled
+        setIsSaveEnabled(transientTrip.name && transientTrip.desc); // enable save button if both name and desc are filled
     };
 
-    // Function to pass to POI form which adds activity entry for POI to state
+    // function to pass to POI form which adds POI to state
     const addPlaceToTransientTrip = (place) => {
         setTransientPlaces(transientPlaces => [...transientPlaces, place]);
     };
@@ -57,6 +58,7 @@ export const TripEdit = ({currentUser}) => {
         }
         else if (tripId !== null && place.id !== null) {
             const activityId = await getActivityId(tripId, place.id)
+            //remove place from DB if its an existing place on an existing trip
             deletePlaceFromTrip(activityId);
             //remove place from state
             setTransientPlaces(transientPlaces => transientPlaces.filter(p => p.id !== place.id));
@@ -79,7 +81,7 @@ export const TripEdit = ({currentUser}) => {
             />
             <div className="trip-edit__poi-list">
                 {transientPlaces?.length ? transientPlaces.map((place, index) => (
-                    //Generate unique key if place.id is undefined
+                    //generate unique key if place.id is undefined
                     <section key={place.id ? place.id : `new-${Date.now()}-${index}`} className="place">
                         <h2>{place.name}</h2>
                         <h3>{place.desc}</h3>
