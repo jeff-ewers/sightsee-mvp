@@ -51,3 +51,8 @@ button {
     font-weight: 700;
     margin: 5px;
 }
+
+form {
+    box-shadow: none;
+    border: 1px solid var(--dark)
+}

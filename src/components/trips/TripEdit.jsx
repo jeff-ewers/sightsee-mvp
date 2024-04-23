@@ -58,7 +58,7 @@ export const TripEdit = ({currentUser}) => {
             <div className="trip-edit__save-form">
                 
                 <form onSubmit={handleSaveTrip}>
-                <h2>Save Trip</h2>
+                    <h2>Save Trip</h2>
                     <div className="form-group">
                         <label>Name:</label>
                         <input
