@@ -19,7 +19,7 @@ export const UserViews = ({currentUser}) => {
         <Route path="trips/*">
           <Route index element={<Trips currentUser={currentUser} />} />
           <Route path=":tripId" element={<TripEdit currentUser={currentUser} />} />
-          <Route path="new" element={<TripCreate currentUser={currentUser} />} />
+          <Route path="new" element={<TripEdit currentUser={currentUser} />} />
         </Route>
         </Route>
         </Routes>
