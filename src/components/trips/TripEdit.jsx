@@ -31,6 +31,7 @@ export const TripEdit = ({currentUser}) => {
         if(transientTrip.name !== "" && transientTrip.desc !== "") {
             setIsSaveEnabled(true);
         }
+        debugger
         saveTripAndPlaces(transientTrip, transientPlaces);
         navigate('/trips');
     };
@@ -40,12 +41,15 @@ export const TripEdit = ({currentUser}) => {
         const { name, value } = event.target;
         //use computed property key in object literal to update state
         setTransientTrip(prevState => ({ ...prevState, [name]: value }));
-        setIsSaveEnabled(transientTrip.name && transientTrip.desc); // enable save button if both name and desc are filled
+        setIsSaveEnabled(
+            (transientTrip.name && transientTrip.desc)
+            ); // enable save button if both name and desc are filled
     };
 
     // function to pass to POI form which adds POI to state
     const addPlaceToTransientTrip = (place) => {
         setTransientPlaces(transientPlaces => [...transientPlaces, place]);
+        setIsSaveEnabled(true);
     };
 
     const removePlace = async (tripId, place) => {
@@ -64,6 +68,7 @@ export const TripEdit = ({currentUser}) => {
             //remove place from state
             setTransientPlaces(transientPlaces => transientPlaces.filter(p => p.id !== place.id));
         }
+        setIsSaveEnabled(true);
     }
 
     const getActivityId = async (tripId, placeId) => {

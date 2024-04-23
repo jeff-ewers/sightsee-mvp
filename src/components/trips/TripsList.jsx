@@ -4,11 +4,13 @@ import { Link, useNavigate } from "react-router-dom"
 import './TripsList.css'
 import trashIcon from '../../assets/trash.png'
 import { deleteTrip } from "../../services/tripService"
+
 export const TripsList = ({currentUser}) => {
 const [trips, setTrips] = useState([])
+const navigate = useNavigate();
 useEffect(() => {
     getTripsWithPlaces(currentUser.id).then(userTrips => {setTrips(userTrips)})
-}, [currentUser.id])
+}, [currentUser.id, navigate])
 
 document.body.style = 'background: #004F32;';
 
