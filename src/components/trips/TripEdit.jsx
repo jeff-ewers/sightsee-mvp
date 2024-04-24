@@ -1,11 +1,12 @@
 import { POIForm } from "./POIForm";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { saveTripAndPlaces } from "../../services/saveService";
 import trashIcon from '../../assets/trash.png'
 import './TripEdit.css';
 import { deletePlaceFromTrip } from "../../services/placeService";
 import { getTripActivities } from "../../services/activitiesService";
+import { UpdateTripsContext } from "../../providers/UpdateTripsProvider"
 
 export const TripEdit = ({currentUser}) => {
     document.body.style = 'background: #004F32;';
@@ -20,10 +21,20 @@ export const TripEdit = ({currentUser}) => {
     });
     const [transientPlaces, setTransientPlaces] = useState(trip ? trip.places : []);
     const [isSaveEnabled, setIsSaveEnabled] = useState(false); // state to toggle save button
+    const [stateUpdateComplete, setStateUpdateComplete] = useState(false);
+    const { updateTrips, setUpdateTrips } = useContext(UpdateTripsContext); 
+
 
     useEffect(() => {
         setTransientTrip(prevState => ({ ...prevState, userId: currentUser.id }));
     }, [currentUser]);
+
+    useEffect(() => {
+        if(stateUpdateComplete) {
+            setStateUpdateComplete(false)
+            navigate('/trips')
+        }
+    }, [stateUpdateComplete]);
 
     // handle form submission
     const handleSaveTrip = (event) => {
@@ -31,9 +42,10 @@ export const TripEdit = ({currentUser}) => {
         if(transientTrip.name !== "" && transientTrip.desc !== "") {
             setIsSaveEnabled(true);
         }
-        debugger
         saveTripAndPlaces(transientTrip, transientPlaces);
-        navigate('/trips');
+        console.log(updateTrips)
+        setUpdateTrips(true);
+        setStateUpdateComplete(true);
     };
 
     // function to handle input changes and enable/disable save button

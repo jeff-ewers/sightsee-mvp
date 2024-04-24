@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { Login } from "./components/auth/Login";
 import { Authorized } from "./views/Authorized";
 import { ApplicationViews } from "./views/ApplicationViews";
-import React from "react";
+import { UpdateTripsProvider } from "./providers/UpdateTripsProvider";
 
 function App() {
   return (
@@ -12,7 +12,9 @@ function App() {
     <Route path="/login" element={<Login />} />
     <Route path="*" element={
       <Authorized>
-        <ApplicationViews />
+        <UpdateTripsProvider>
+          <ApplicationViews />
+        </UpdateTripsProvider>
       </Authorized>
     } />
     </Routes>

@@ -1,16 +1,27 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import { getTripsWithPlaces } from "../../services/tripService"
-import { Link, useNavigate } from "react-router-dom"
+import { Link} from "react-router-dom"
 import './TripsList.css'
 import trashIcon from '../../assets/trash.png'
 import { deleteTrip } from "../../services/tripService"
+import { UpdateTripsContext } from "../../providers/UpdateTripsProvider"
 
 export const TripsList = ({currentUser}) => {
+
 const [trips, setTrips] = useState([])
-const navigate = useNavigate();
+const { updateTrips, setUpdateTrips } = useContext(UpdateTripsContext);
+
 useEffect(() => {
     getTripsWithPlaces(currentUser.id).then(userTrips => {setTrips(userTrips)})
-}, [currentUser.id, navigate])
+}, [currentUser.id])
+
+useEffect(() => {
+    if(updateTrips) {
+        getTripsWithPlaces(currentUser.id).then(userTrips => {setTrips(userTrips)})
+        setUpdateTrips(false)
+    }
+}, [updateTrips, setUpdateTrips])
+
 
 document.body.style = 'background: #004F32;';
 
