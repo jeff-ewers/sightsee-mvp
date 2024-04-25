@@ -32,7 +32,6 @@ export const TripEdit = ({currentUser}) => {
 
     useEffect(() => {
         if(stateUpdateComplete) {
-            console.log("State update complete, navigating...")
             setStateUpdateComplete(false)
             navigate('/trips')
         }
@@ -40,14 +39,12 @@ export const TripEdit = ({currentUser}) => {
 
     // handle form submission
     const handleSaveTrip = async (event) => {
-        console.log(`Saving, updateTrips is currently: ${updateTrips}`)
         event.preventDefault(); // prevent default form submission and full page reload
         if(transientTrip.name !== "" && transientTrip.desc !== "") {
             setIsSaveEnabled(true);
         }
         await saveTripAndPlaces(transientTrip, transientPlaces);
         setUpdateTrips(true);
-        console.log(`Set true, updateTrips is currently: ${updateTrips}`)
         setStateUpdateComplete(true);
     };
 
