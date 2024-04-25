@@ -7,6 +7,9 @@ import { Home } from "../components/home/Home.jsx"
 
 
 export const UserViews = ({currentUser}) => {
+
+
+
     return (
         <Routes> 
         <Route path="/" element={
@@ -17,9 +20,9 @@ export const UserViews = ({currentUser}) => {
         }>
         <Route index element={<Home currentUser={currentUser}/>}/>
         <Route path="trips/*">
-          <Route index element={<Trips currentUser={currentUser} />} />
-          <Route path=":tripId" element={<TripEdit currentUser={currentUser} />} />
-          <Route path="new" element={<TripEdit currentUser={currentUser} />} />
+          <Route index element={<Trips currentUser={currentUser}/>} />
+          <Route path=":tripId" element={<TripEdit currentUser={currentUser}/>} />
+          <Route path="new" element={<TripEdit currentUser={currentUser}/>} />
         </Route>
         </Route>
         </Routes>

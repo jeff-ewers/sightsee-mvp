@@ -1,13 +1,15 @@
 import { POIForm } from "./POIForm";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { saveTripAndPlaces } from "../../services/saveService";
 import trashIcon from '../../assets/trash.png'
 import './TripEdit.css';
 import { deletePlaceFromTrip } from "../../services/placeService";
 import { getTripActivities } from "../../services/activitiesService";
+import { UpdateTripsContext } from "../../providers/UpdateTripsProvider"
 
 export const TripEdit = ({currentUser}) => {
+
     document.body.style = 'background: #004F32;';
     const location = useLocation();
     const navigate = useNavigate()
@@ -20,20 +22,33 @@ export const TripEdit = ({currentUser}) => {
     });
     const [transientPlaces, setTransientPlaces] = useState(trip ? trip.places : []);
     const [isSaveEnabled, setIsSaveEnabled] = useState(false); // state to toggle save button
+    const [stateUpdateComplete, setStateUpdateComplete] = useState(false);
+    const { updateTrips, setUpdateTrips } = useContext(UpdateTripsContext); 
+
 
     useEffect(() => {
         setTransientTrip(prevState => ({ ...prevState, userId: currentUser.id }));
     }, [currentUser]);
 
+    useEffect(() => {
+        if(stateUpdateComplete) {
+            console.log("State update complete, navigating...")
+            setStateUpdateComplete(false)
+            navigate('/trips')
+        }
+    }, [stateUpdateComplete]);
+
     // handle form submission
-    const handleSaveTrip = (event) => {
+    const handleSaveTrip = async (event) => {
+        console.log(`Saving, updateTrips is currently: ${updateTrips}`)
         event.preventDefault(); // prevent default form submission and full page reload
         if(transientTrip.name !== "" && transientTrip.desc !== "") {
             setIsSaveEnabled(true);
         }
-        debugger
-        saveTripAndPlaces(transientTrip, transientPlaces);
-        navigate('/trips');
+        await saveTripAndPlaces(transientTrip, transientPlaces);
+        setUpdateTrips(true);
+        console.log(`Set true, updateTrips is currently: ${updateTrips}`)
+        setStateUpdateComplete(true);
     };
 
     // function to handle input changes and enable/disable save button

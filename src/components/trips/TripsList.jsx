@@ -1,16 +1,19 @@
-import { useEffect, useState } from "react"
-import { getTripsWithPlaces } from "../../services/tripService"
-import { Link, useNavigate } from "react-router-dom"
+
+import { Link} from "react-router-dom"
 import './TripsList.css'
 import trashIcon from '../../assets/trash.png'
 import { deleteTrip } from "../../services/tripService"
+import { useEffect, useState } from "react"
 
-export const TripsList = ({currentUser}) => {
-const [trips, setTrips] = useState([])
-const navigate = useNavigate();
+
+export const TripsList = ({currentUser, trips, setTrips, updateTrips, setUpdateTrips}) => {
+
+const [localTrips, setLocalTrips] = useState([]);
+
 useEffect(() => {
-    getTripsWithPlaces(currentUser.id).then(userTrips => {setTrips(userTrips)})
-}, [currentUser.id, navigate])
+    setLocalTrips(trips)
+}, [trips])
+
 
 document.body.style = 'background: #004F32;';
 
@@ -21,6 +24,7 @@ const removeTrip = (event, tripId) => {
     event.stopPropagation();
     deleteTrip(tripId).then(() => {
         //update component state after deletion
+        setLocalTrips(localTrips.filter((trip) => trip.id !== tripId));
         setTrips(trips.filter(trip => trip.id !== tripId));
     });
     window.alert(`Trip deleted.`)
@@ -40,7 +44,7 @@ return (
             </section>
         </Link>
             {
-                trips?.length ? trips.map(trip => {
+                localTrips?.length ? localTrips.map(trip => {
                     return (
                         <Link key={trip.id} to={`/trips/${trip.id}`}
                         // pass trip as state for useLocation()
