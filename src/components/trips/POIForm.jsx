@@ -23,20 +23,16 @@ export const POIForm = ({ currentUser, existingPOI, addPlaceToTransientTrip }) =
     if (editedPOI.categoryId !== 0) {
         const poiToSave = {
             ...editedPOI,
-            id: existingPOI ? existingPOI.id : null, // If editing, keep the existing ID; otherwise, it's a new POI
+            // If editing a poi, keep the existing ID, otherwise set to null
+            id: existingPOI ? existingPOI.id : null, 
           };
           addPlaceToTransientTrip(poiToSave)
     }
     else {
         window.alert(`Please select a category.`)
     }
-    //.then(() => {
-      // Handle successful save, e.g., navigate back or show a success message
-    //}).catch((error) => {
-      // Handle error, e.g., show an error message
     }
-    //);
- //};
+
 
  return (
     <form className="trip-edit__poi-form">

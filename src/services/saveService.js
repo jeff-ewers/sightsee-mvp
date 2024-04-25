@@ -24,7 +24,7 @@ export const saveTripAndPlaces = async (transientTrip, transientPlaces) => {
         body: JSON.stringify(transientTrip),
     }) 
     .then(response => response.json())
-    .then(savedTrip => {
+    .then(async savedTrip => {
         //save new places and create activities
         const promises = transientPlaces.map(place => {
             if (!place.id) {
@@ -75,7 +75,7 @@ export const saveTripAndPlaces = async (transientTrip, transientPlaces) => {
             }
         });
 
-        return Promise.all(promises);
+        return await Promise.all(promises);
     })
     .then(() => {
         console.log("Trip and places saved successfully.");
