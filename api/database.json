@@ -116,27 +116,13 @@
       "desc": "A multi-purpose stadium in Paris, France.",
       "categoryId": 6,
       "userId": 1
-    },
-    {
-      "name": "Cafe",
-      "desc": "cafe",
-      "categoryId": 4,
-      "userId": 1,
-      "id": 20
-    },
-    {
-      "name": "Museum",
-      "desc": "museum",
-      "categoryId": 2,
-      "userId": 1,
-      "id": 21
     }
   ],
   "trips": [
     {
-      "id": 1,
       "name": "Historical Paris Tour",
       "desc": "A tour focusing on historical sites in Paris.",
+      "id": 1,
       "userId": 1
     },
     {
@@ -161,12 +147,6 @@
       "id": 5,
       "name": "Nature and Outdoors",
       "desc": "A trip exploring Paris's parks and outdoor activities.",
-      "userId": 1
-    },
-    {
-      "name": "Cafe and Museum trip",
-      "desc": "A trip to them",
-      "id": 7,
       "userId": 1
     }
   ],
@@ -226,11 +206,6 @@
       "id": 6,
       "tripId": 2,
       "placeId": 6
-    },
-    {
-      "id": 7,
-      "tripId": 1,
-      "placeId": 11
     },
     {
       "id": 8,
@@ -296,11 +271,6 @@
       "id": 18,
       "tripId": 5,
       "placeId": 15
-    },
-    {
-      "tripId": 7,
-      "placeId": 20,
-      "id": 21
     }
   ]
 }

@@ -7,6 +7,7 @@ import { TripsList } from "./TripsList"
 import { getTripsWithPlaces } from "../../services/tripService"
 import { UpdateTripsContext } from "../../providers/UpdateTripsProvider"
 import './TripsList.css'
+import { Map } from "../map/Map"
 
 const TOKEN = import.meta.env.VITE_MAPBOX_TOKEN
 
@@ -33,9 +34,7 @@ export const Trips = ({currentUser}) => {
     }, [currentUser.id])
     
     useEffect(() => {
-      console.log(`Trips testing updateTrips: ${updateTrips}`)
         if(updateTrips) {
-          console.log('Trips found true updateTrips')
             getTripsWithPlaces(currentUser.id).then(userTrips => {setTrips(userTrips)})
             setUpdateTrips(false)
         }
@@ -56,7 +55,10 @@ export const Trips = ({currentUser}) => {
 return (
     <div className="trips">
         <div style={{ width: "100vw", height: "450px", zIndex: 10}}>
-      {/* <ReactMapGL 
+          {/* <Map>
+
+          </Map> */}
+      <ReactMapGL 
       {...viewport}
       mapboxAccessToken={TOKEN}
       mapStyle="mapbox://styles/sightsee-admin/clv65kdd702s401pk1yu1dsi8/draft"
@@ -70,7 +72,7 @@ return (
             popup={popup}
           </Marker>
        ) : null}
-      </ReactMapGL> */}
+      </ReactMapGL>
       </div>
       <div className="trips-list__container">
         <TripsList 
